@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ax Packs</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="./index.html">
+        <img src="./assets/ax-logo.png" alt="Ax logo">
+        Ax
+      </a>
+      <div class="nav-group">
+        <a href="./index.html">Overview</a>
+        <a href="./install.html">Install</a>
+        <a href="./language.html">Language</a>
+        <a class="active" href="./packs.html">Packs</a>
+        <a href="./pack-authoring.html">Pack Authoring</a>
+        <a href="./agents.html">Agent Samples</a>
+        <a href="./benchmarks.html">Benchmarks</a>
+      </div>
+      <div class="nav-meta">
+        <a href="https://github.com/axlanguage/axlang">GitHub</a>
+        <a href="https://github.com/axlanguage/axlang/releases/latest">Latest Release</a>
+      </div>
+    </nav>
+    <main>
+      <div class="eyebrow">Packs</div>
+      <h1>Packs keep Ax small while adding native capability.</h1>
+
+      <h2>Built-In Packs</h2>
+      <table>
+        <tr><th>Pack</th><th>Operations</th><th>Effects</th></tr>
+        <tr><td><code>std.io</code></td><td><code>io.println</code>, <code>io.print</code>, <code>io.eprintln</code>, <code>io.read_line</code></td><td><code>io.stdout</code>, <code>io.stderr</code>, <code>io.stdin</code></td></tr>
+        <tr><td><code>std.fs</code></td><td><code>fs.read_text</code>, <code>fs.read_text_or</code>, <code>fs.read_text_limit</code>, <code>fs.read_text_range</code>, <code>fs.read_text_tail</code>, <code>fs.read_lines</code>, <code>fs.read_lines_json</code>, <code>fs.read_jsonl</code>, <code>fs.read_json</code>, <code>fs.read_json_or</code>, <code>fs.read_base64</code>, <code>fs.read_base64_range</code>, <code>fs.read_base64_tail</code>, <code>fs.write_text</code>, <code>fs.write_text_atomic</code>, <code>fs.write_json_atomic</code>, <code>fs.write_base64</code>, <code>fs.append_text</code>, <code>fs.append_jsonl</code>, <code>fs.exists</code>, <code>fs.remove</code>, <code>fs.remove_dir</code>, <code>fs.mkdir</code>, <code>fs.mkdir_all</code>, <code>fs.ensure_parent</code>, <code>fs.list</code>, <code>fs.list_json</code>, <code>fs.list_stat_json</code>, <code>fs.walk</code>, <code>fs.walk_json</code>, <code>fs.walk_stat_json</code>, <code>fs.find</code>, <code>fs.glob</code>, <code>fs.copy</code>, <code>fs.rename</code>, <code>fs.size</code>, <code>fs.stat_json</code>, <code>fs.cwd</code>, <code>fs.temp_dir</code>, <code>fs.is_file</code>, <code>fs.is_dir</code>, <code>fs.modified</code></td><td><code>fs.read</code>, <code>fs.write</code></td></tr>
+        <tr><td><code>std.crypto</code></td><td><code>crypto.sha256_hex</code>, <code>crypto.sha256_json</code>, <code>crypto.sha256_verify_hex</code>, <code>crypto.hmac_sha256_hex</code>, <code>crypto.hmac_sha256_json</code>, <code>crypto.hmac_sha256_verify_hex</code>, <code>crypto.hmac_sha256_file_hex</code>, <code>crypto.hmac_sha256_file_json</code>, <code>crypto.hmac_sha256_file_verify_hex</code>, <code>crypto.hmac_sha256_file_range_hex</code>, <code>crypto.hmac_sha256_file_range_json</code>, <code>crypto.hmac_sha256_file_range_verify_hex</code>, <code>crypto.sha256_file_hex</code>, <code>crypto.sha256_file_json</code>, <code>crypto.sha256_file_verify_hex</code>, <code>crypto.sha256_file_range_hex</code>, <code>crypto.sha256_file_range_json</code>, <code>crypto.sha256_file_range_verify_hex</code>, <code>crypto.base64_encode</code>, <code>crypto.base64_decode</code>, <code>crypto.constant_time_eq</code>, <code>crypto.random_hex</code>, <code>crypto.random_base64url</code>, <code>crypto.uuid_v4</code></td><td><code>crypto.hash</code>, <code>crypto.random</code>; file hashing, signing, and verification also use <code>fs.read</code>; base64 and compare are pure; JSON digest helpers return compact provenance metadata</td></tr>
+        <tr><td><code>std.env</code></td><td><code>env.get</code>, <code>env.has</code>, <code>env.set</code>, <code>env.get_or</code>, <code>env.snapshot_json</code>, <code>env.load_dotenv</code>, <code>env.load_dotenv_json</code></td><td><code>env.read</code>, <code>env.write</code>; dotenv loading also uses <code>fs.read</code></td></tr>
+        <tr><td><code>std.process</code></td><td><code>process.exec</code>, <code>process.exec_limit</code>, <code>process.status</code>, <code>process.run_json</code>, <code>process.run_log_json</code>, <code>process.run_lines_json</code>, <code>process.run_log_lines_json</code></td><td><code>process.exec</code>; log helpers merge stderr into bounded diagnostic output, and line helpers return JSON arrays</td></tr>
+        <tr><td><code>std.cli</code></td><td><code>cli.argc</code>, <code>cli.arg</code>, <code>cli.has</code>, <code>cli.value</code>, <code>cli.value_or</code>, <code>cli.args_json</code>, <code>cli.parse_json</code></td><td><code>cli.read</code>; parse helpers return compact argv, positional, flag, and option manifests</td></tr>
+        <tr><td><code>std.json</code></td><td><code>json.escape</code>, <code>json.quote</code>, <code>json.pair</code>, <code>json.string_pair</code>, <code>json.object</code>, <code>json.array</code>, <code>json.array_push</code>, <code>json.string_array_push</code>, <code>json.set</code>, <code>json.string_set</code>, <code>json.remove</code>, <code>json.compact</code>, <code>json.valid</code>, <code>json.get</code>, <code>json.get_or</code>, <code>json.query</code>, <code>json.query_or</code>, <code>json.query_int</code>, <code>json.query_bool</code>, <code>json.query_kind</code>, <code>json.has</code>, <code>json.query_has</code>, <code>json.int</code>, <code>json.bool</code>, <code>json.contains</code>, <code>json.query_contains</code>, <code>json.kind</code>, <code>json.len</code>, <code>json.query_len</code>, <code>json.at</code>, <code>json.query_at</code>, <code>json.keys</code>, <code>json.keys_json</code>, <code>json.query_keys_json</code></td><td>pure; state, array append, key, and nested array helpers support JSON pipelines</td></tr>
+        <tr><td><code>std.str</code></td><td><code>str.len</code>, <code>str.contains</code>, <code>str.index_of</code>, <code>str.count</code>, <code>str.starts_with</code>, <code>str.ends_with</code>, <code>str.trim</code>, <code>str.upper</code>, <code>str.lower</code>, <code>str.concat</code>, <code>str.repeat</code>, <code>str.replace</code>, <code>str.slice</code>, <code>str.split_json</code>, <code>str.lines_json</code></td><td>pure</td></tr>
+        <tr><td><code>std.path</code></td><td><code>path.normalize</code>, <code>path.join</code>, <code>path.basename</code>, <code>path.dirname</code>, <code>path.extname</code>, <code>path.stem</code>, <code>path.is_absolute</code></td><td>pure</td></tr>
+        <tr><td><code>std.time</code></td><td><code>time.now</code>, <code>time.now_ms</code>, <code>time.iso_utc</code>, <code>time.sleep_ms</code></td><td><code>time.now</code>, <code>time.sleep</code></td></tr>
+        <tr><td><code>std.url</code></td><td><code>url.encode</code>, <code>url.decode</code>, <code>url.query_get</code>, <code>url.query_or</code>, <code>url.query_has</code>, <code>url.query_json</code>, <code>url.path</code>, <code>url.host</code>, <code>url.scheme</code></td><td>pure</td></tr>
+        <tr><td><code>std.net.http</code></td><td><code>server</code> blocks</td><td><code>net.listen</code>, <code>net.read</code>, <code>net.write</code></td></tr>
+        <tr><td><code>std.net.http.client</code></td><td><code>http.get</code>, <code>http.post</code>, <code>http.get_json</code>, <code>http.post_json</code></td><td><code>net.read</code>, <code>net.write</code></td></tr>
+        <tr><td><code>std.net.tcp</code></td><td><code>tcp</code> blocks</td><td><code>net.listen</code>, <code>net.read</code>, <code>net.write</code></td></tr>
+      </table>
+
+      <h2>Make A New Pack</h2>
+      <p>For a fuller walkthrough, see <a href="./pack-authoring.html">Pack Authoring</a>.</p>
+      <pre><code>registry/
+  acme.telemetry/
+    pack.axpack
+    native.c</code></pre>
+
+      <pre><code>name = "acme.telemetry"
+version = "1.0.0"
+syntax = []
+operations = ["telemetry.track"]
+effects = ["telemetry.write"]
+native = ["native.c"]</code></pre>
+
+      <pre><code>void ax_pack_acme_telemetry_track(void) {
+  /* native implementation */
+}</code></pre>
+
+      <h2>Use A Pack</h2>
+      <pre><code>ax pack list --registry ./registry
+ax pack find telemetry --registry ./registry
+ax pack info acme.telemetry --registry ./registry
+ax pack install acme.telemetry --registry ./registry
+ax build app.ax -o app --registry ./registry</code></pre>
+    </main>
+  </div>
+</body>
+</html>

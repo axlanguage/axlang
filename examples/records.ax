@@ -1,0 +1,1 @@
+%a{a:i64,b:$} {$b=a{a:1,b:"taewoong"};b.b}

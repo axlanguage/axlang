@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ax Agent Samples</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="./index.html">
+        <img src="./assets/ax-logo.png" alt="Ax logo">
+        Ax
+      </a>
+      <div class="nav-group">
+        <a href="./index.html">Overview</a>
+        <a href="./install.html">Install</a>
+        <a href="./language.html">Language</a>
+        <a href="./packs.html">Packs</a>
+        <a href="./pack-authoring.html">Pack Authoring</a>
+        <a class="active" href="./agents.html">Agent Samples</a>
+        <a href="./benchmarks.html">Benchmarks</a>
+      </div>
+      <div class="nav-meta">
+        <a href="https://github.com/axlanguage/axlang">GitHub</a>
+        <a href="https://github.com/axlanguage/axlang/releases/latest">Latest Release</a>
+      </div>
+    </nav>
+    <main>
+      <div class="eyebrow">Agents</div>
+      <h1>Ax programs make compact native tools for AI agents.</h1>
+
+      <div class="grid">
+        <div class="tile"><strong>File digest</strong><code>examples/agents/file_digest.ax</code> reads bounded prefix, range, tail, text line, JSON line-window previews, and base64 file byte windows, writes artifacts, and hashes full files or byte ranges.</div>
+        <div class="tile"><strong>FS journal</strong><code>examples/agents/fs_journal.ax</code> prepares nested artifact parents, appends and reads JSONL event logs, walks and filters artifacts with newline and JSON discovery APIs, records stat arrays, writes atomically, persists validated JSON state, cleans, and hashes outputs.</div>
+        <div class="tile"><strong>Signed manifest</strong><code>examples/agents/signed_manifest.ax</code> hashes a file and signs compact JSON, whole files, and byte ranges with HMAC-SHA256.</div>
+        <div class="tile"><strong>Secure token</strong><code>examples/agents/secure_token.ax</code> creates random hex and base64url tokens, UUID trace IDs, and checks signatures with constant-time compare.</div>
+        <div class="tile"><strong>Env report</strong><code>examples/agents/env_report.ax</code> reads defaulted agent metadata and writes a prefix-scoped environment JSON snapshot.</div>
+        <div class="tile"><strong>Process probe</strong><code>examples/agents/process_probe.ax</code> captures command output, status, line arrays, and merged diagnostic logs as structured JSON for native agent workflows.</div>
+        <div class="tile"><strong>IO diagnostics</strong><code>examples/agents/io_diagnostics.ax</code> keeps stdout protocol output separate from stderr diagnostics with <code>io.eprintln</code>.</div>
+        <div class="tile"><strong>CLI probe</strong><code>examples/agents/cli_probe.ax</code> reads flags, defaulted option values, structured argv JSON, and parsed option/flag manifests.</div>
+        <div class="tile"><strong>JSON tool</strong><code>examples/agents/json_tool.ax</code> validates JSON, reads defaulted fields, queries nested paths, reads typed scalars, checks arrays, appends array manifests, builds valid JSON artifacts, and writes key manifests.</div>
+        <div class="tile"><strong>String agent</strong><code>examples/agents/string_agent.ax</code> normalizes labels, checks byte positions and match counts, and writes a digest.</div>
+        <div class="tile"><strong>Path manifest</strong><code>examples/agents/path_manifest.ax</code> normalizes source paths and writes a manifest digest.</div>
+        <div class="tile"><strong>Time probe</strong><code>examples/agents/time_probe.ax</code> records seconds, milliseconds, UTC ISO timestamps, and a short native sleep.</div>
+        <div class="tile"><strong>URL router</strong><code>examples/agents/url_router.ax</code> extracts URL parts, individual query values, and decoded query JSON for HTTP-facing tools.</div>
+        <div class="tile"><strong>Tool server</strong><code>examples/agents/tool_server.ax</code> exposes native HTTP endpoints.</div>
+        <div class="tile"><strong>HTTP fetch</strong><code>examples/agents/http_fetch.ax</code> calls local HTTP tool endpoints with body-only and structured bounded JSON GET/POST results.</div>
+        <div class="tile"><strong>Async score</strong><code>examples/agents/async_score.ax</code> demonstrates async worker dispatch.</div>
+      </div>
+
+      <h2>Native HTTP Tool</h2>
+      <pre><code>&amp;3010{G/health&gt;#{ok:!1,service:"ax-agent-tool"} G/tools/*&gt;"tool" P/echo&gt;~}</code></pre>
+
+      <h2>Run</h2>
+      <pre><code>ax build examples/agents/tool_server.ax -o .ax-out/tool_server
+.ax-out/tool_server
+curl http://localhost:3010/health</code></pre>
+
+      <h2>HTTP Client</h2>
+      <pre><code>ax run examples/agents/http_fetch.ax</code></pre>
+
+      <h2>Environment Metadata</h2>
+      <pre><code>AX_AGENT_NAME=ax ax run examples/agents/env_report.ax</code></pre>
+
+      <h2>FS Journal</h2>
+      <pre><code>ax run examples/agents/fs_journal.ax</code></pre>
+
+      <h2>Signed Manifest</h2>
+      <pre><code>ax run examples/agents/signed_manifest.ax</code></pre>
+
+      <h2>Secure Token</h2>
+      <pre><code>ax run examples/agents/secure_token.ax</code></pre>
+
+      <h2>Process Capture</h2>
+      <pre><code>ax run examples/agents/process_probe.ax</code></pre>
+
+      <h2>IO Diagnostics</h2>
+      <pre><code>ax run examples/agents/io_diagnostics.ax
+# stdout stays protocol-safe; io.eprintln writes diagnostics to stderr</code></pre>
+
+      <h2>CLI Arguments</h2>
+      <pre><code>ax run examples/agents/cli_probe.ax -- --input examples/agents/path_manifest.ax --mode digest --upper</code></pre>
+
+      <h2>JSON Payloads</h2>
+      <pre><code>ax run examples/agents/json_tool.ax</code></pre>
+
+      <h2>String Normalization</h2>
+      <pre><code>ax run examples/agents/string_agent.ax</code></pre>
+
+      <h2>Path Manifest</h2>
+      <pre><code>ax run examples/agents/path_manifest.ax</code></pre>
+
+      <h2>Time Probe</h2>
+      <pre><code>ax run examples/agents/time_probe.ax</code></pre>
+
+      <h2>URL Router</h2>
+      <pre><code>ax run examples/agents/url_router.ax</code></pre>
+    </main>
+  </div>
+</body>
+</html>

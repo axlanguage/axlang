@@ -1,0 +1,16 @@
+[package]
+name = "ax_fmt"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ax_ast = { path = "../ax_ast" }
+
+[dev-dependencies]
+ax_core = { path = "../ax_core" }
+ax_parser = { path = "../ax_parser" }
+ax_semantic = { path = "../ax_semantic" }
+
+[lib]
+path = "src/lib.rs"

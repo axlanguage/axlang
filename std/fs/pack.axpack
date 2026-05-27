@@ -1,0 +1,5 @@
+name = "std.fs"
+version = "1.0.0"
+syntax = []
+operations = ["fs.read_text", "fs.read_text_or", "fs.read_text_limit", "fs.read_text_range", "fs.read_text_tail", "fs.read_lines", "fs.read_lines_json", "fs.read_jsonl", "fs.read_json", "fs.read_json_or", "fs.read_base64", "fs.read_base64_range", "fs.read_base64_tail", "fs.write_text", "fs.write_text_atomic", "fs.write_json_atomic", "fs.write_base64", "fs.append_text", "fs.append_jsonl", "fs.exists", "fs.remove", "fs.remove_dir", "fs.mkdir", "fs.mkdir_all", "fs.ensure_parent", "fs.list", "fs.list_json", "fs.list_stat_json", "fs.walk", "fs.walk_json", "fs.walk_stat_json", "fs.find", "fs.glob", "fs.copy", "fs.rename", "fs.size", "fs.stat_json", "fs.cwd", "fs.temp_dir", "fs.is_file", "fs.is_dir", "fs.modified"]
+effects = ["fs.read", "fs.write"]

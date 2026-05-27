@@ -1,0 +1,5 @@
+name = "std.net.http"
+version = "1.0.0"
+syntax = ["server"]
+operations = []
+effects = ["net.listen", "net.read", "net.write"]

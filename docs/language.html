@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ax Language</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="./index.html">
+        <img src="./assets/ax-logo.png" alt="Ax logo">
+        Ax
+      </a>
+      <div class="nav-group">
+        <a href="./index.html">Overview</a>
+        <a href="./install.html">Install</a>
+        <a class="active" href="./language.html">Language</a>
+        <a href="./packs.html">Packs</a>
+        <a href="./pack-authoring.html">Pack Authoring</a>
+        <a href="./agents.html">Agent Samples</a>
+        <a href="./benchmarks.html">Benchmarks</a>
+      </div>
+      <div class="nav-meta">
+        <a href="https://github.com/axlanguage/axlang">GitHub</a>
+        <a href="https://github.com/axlanguage/axlang/releases/latest">Latest Release</a>
+      </div>
+    </nav>
+    <main>
+      <div class="eyebrow">Language</div>
+      <h1>AI-min source is the language surface.</h1>
+
+      <div class="callout">Ax source is authored directly in compact parser-checked form. Standard packs and effects are inferred where the compiler can prove them.</div>
+
+      <h2>Main Blocks And Functions</h2>
+      <pre><code>{;"hello world"}
+
+@add(a:#,b:#):#{^a+b}
+{^add(20,22)}</code></pre>
+
+      <h2>Records And Enums</h2>
+      <pre><code>%User{id:i64,name:str}
+%%Status{Ok,Fail}
+{$u=User{id:1,name:"ax"}^u.id}</code></pre>
+
+      <h2>Primitive Types</h2>
+      <p>Ax supports <code>i8</code>, <code>i16</code>, <code>i32</code>, <code>i64</code>, <code>u8</code>, <code>u16</code>, <code>u32</code>, <code>u64</code>, <code>f32</code>, <code>f64</code>, <code>bool</code>, <code>str</code>, <code>void</code>, optional forms, result-style generics, and array type references. <code>#</code> is the compact <code>i32</code> alias.</p>
+
+      <h2>Operators</h2>
+      <p>Numeric expressions support arithmetic and comparisons. Boolean expressions use <code>&amp;</code>, <code>|</code>, and <code>!</code>. Equality uses <code>:</code> and inequality uses <code>!:</code>. Boolean literals are <code>!1</code> and <code>!0</code>.</p>
+
+      <h2>Async</h2>
+      <pre><code>@@add(x:#,y:#):#{^x+y}
+{^@(add(20,22))}</code></pre>
+
+      <div class="callout">Futures and heap pointers are move-only. Reusing them after await, cancel, free, or field move produces <code>AX_USE_AFTER_MOVE</code>.</div>
+
+      <h2>HTTP And TCP</h2>
+      <pre><code>&amp;3000{G/ping&gt;"pong" G/health&gt;#{ok:!1,service:"ax"} P/echo&gt;~}
+
+&amp;&amp;3000{"PING\n"&gt;"PONG\n"*&gt;"ERR\n"}</code></pre>
+
+      <h2>Tests</h2>
+      <pre><code>@fib(n:#):#{$i=0$a=0$b=1 ~i&lt;n{$next=a+b a=b b=next i=i+1}^a}
+?"fib"{:fib(7):13}</code></pre>
+      <p><code>ax test</code> semantically checks test files, then runs compiler-side pure test blocks from <code>tests/**/*.ax</code>. The v1 runner supports local bindings, identifier assignment, direct pure function calls, assertions, <code>?</code>/<code>|</code> branches, <code>~</code> loops, and bounded loop execution.</p>
+
+      <h2>External Packs</h2>
+      <pre><code>+acme.telemetry {telemetry.track()}</code></pre>
+    </main>
+  </div>
+</body>
+</html>

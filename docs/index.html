@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ax is an AI-native systems language preview for compact source, native binaries, explicit semantics, and pack-powered tooling.">
+  <title>Ax</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="./index.html">
+        <img src="./assets/ax-logo.png" alt="Ax logo">
+        Ax
+      </a>
+      <div class="nav-group">
+        <a class="active" href="./index.html">Overview</a>
+        <a href="./install.html">Install</a>
+        <a href="./language.html">Language</a>
+        <a href="./packs.html">Packs</a>
+        <a href="./pack-authoring.html">Pack Authoring</a>
+        <a href="./agents.html">Agent Samples</a>
+        <a href="./benchmarks.html">Benchmarks</a>
+      </div>
+      <div class="nav-meta">
+        <a href="https://github.com/axlanguage/axlang">GitHub</a>
+        <a href="https://github.com/axlanguage/axlang/releases/latest">Latest Release</a>
+      </div>
+    </nav>
+    <main>
+      <section class="hero">
+        <div>
+          <div class="eyebrow">AI-native systems language</div>
+          <h1>Compact source. Native binaries. Built for agents.</h1>
+          <p class="lead">Ax is a preview programming language for extreme code compression, explicit semantics, native execution, and small tools that humans and AI agents can inspect quickly.</p>
+          <div class="hero-actions">
+            <a class="button primary" href="./install.html">Install Ax</a>
+            <a class="button ghost" href="./language.html">Read Language Docs</a>
+            <a class="button ghost" href="https://github.com/axlanguage/axlang">View GitHub</a>
+          </div>
+          <div class="stats">
+            <div class="stat"><strong>1.7 MiB</strong><span>current release compiler binary in this workspace</span></div>
+            <div class="stat"><strong>Native</strong><span>LLVM backend, clang linker, small C runtime ABI</span></div>
+            <div class="stat"><strong>Packs</strong><span>filesystem, crypto, process, JSON, TCP, HTTP, and more</span></div>
+          </div>
+        </div>
+        <img class="hero-logo" src="./assets/ax-logo.png" alt="Ax logo">
+      </section>
+
+      <section>
+        <div class="eyebrow">Start</div>
+        <h1>Install, run, and ship compact Ax programs.</h1>
+        <p class="lead">Prebuilt binaries are published for macOS arm64/x64, Linux x64/arm64, and Windows x64. Release binaries embed the standard pack manifests and runtime sources for standalone installation.</p>
+        <pre><code>curl -fsSL https://raw.githubusercontent.com/axlanguage/axlang/main/dist/install.sh | sh
+export PATH="$HOME/.ax/bin:$PATH"
+ax version
+ax run examples/hello.ax</code></pre>
+        <div class="inline-actions">
+          <a class="button" href="./install.html">Install Guide</a>
+          <a class="button" href="https://github.com/axlanguage/axlang/releases/latest">Release Binaries</a>
+        </div>
+      </section>
+
+      <section>
+        <h2>Compact Source Is The Surface</h2>
+        <p>Ax source is authored directly in parser-checked AI-min form. The compiler, formatter, examples, tests, docs, and agent skill all treat compact `.ax` as the source of truth.</p>
+        <pre><code>{;"hello world"}
+
+@add(a:#,b:#):#{^a+b}
+?"math"{:add(20,22):42}
+
+&3000{G/ping&gt;"pong" G/health&gt;#{ok:!1,service:"ax"}}</code></pre>
+      </section>
+
+      <section>
+        <h2>Docs</h2>
+        <div class="doc-grid">
+          <a class="doc-card" href="./install.html"><strong>Install</strong><span>Release binaries, source builds, checksums, platform notes, and agent skill setup.</span></a>
+          <a class="doc-card" href="./language.html"><strong>Language</strong><span>Main blocks, functions, records, enums, async, tests, HTTP, TCP, and compact operators.</span></a>
+          <a class="doc-card" href="./packs.html"><strong>Packs</strong><span>Built-in packs for IO, filesystem, crypto, process, CLI, JSON, strings, maps, network, and time.</span></a>
+          <a class="doc-card" href="./pack-authoring.html"><strong>Pack Authoring</strong><span>Manifest layout, native C shims, effects, registry commands, and validation workflow.</span></a>
+          <a class="doc-card" href="./agents.html"><strong>Agent Samples</strong><span>Native compact tools for files, JSON, processes, HTTP, signatures, URLs, environment, and scheduling.</span></a>
+          <a class="doc-card" href="./benchmarks.html"><strong>Benchmarks</strong><span>Local regression harness comparing Ax, C, Rust, Python, and JavaScript workloads.</span></a>
+        </div>
+      </section>
+
+      <section class="release-band">
+        <h2>Coming Up</h2>
+        <p>Ax will continue opening up as an AI-native language and toolchain focused on extreme code compression, native performance, and stable agent-readable systems software.</p>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

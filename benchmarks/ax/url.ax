@@ -1,0 +1,1 @@
+@a(b:#):#{$c=0$d=0$e="https://agent.local/tools/search?q=Ax%20language&mode=fast" ~c<b{$f=Uh(e)$g=Ug(e)$h=Uc(e,"q")$i=Ua(g)$j=Ub(i)d=d+f!d=d+j!d=d+h!c=c+1}^d%251} {^a(100000)}

@@ -1,0 +1,9 @@
+[package]
+name = "ax"
+version = "1.0.0"
+
+[dependencies]
+std.io = "1.0"
+std.net.tcp = "1.0"
+std.net.http = "1.0"
+

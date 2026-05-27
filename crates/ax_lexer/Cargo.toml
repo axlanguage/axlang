@@ -1,0 +1,12 @@
+[package]
+name = "ax_lexer"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ax_core = { path = "../ax_core" }
+
+[lib]
+path = "src/lib.rs"
+

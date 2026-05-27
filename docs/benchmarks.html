@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ax Benchmarks</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="./index.html">
+        <img src="./assets/ax-logo.png" alt="Ax logo">
+        Ax
+      </a>
+      <div class="nav-group">
+        <a href="./index.html">Overview</a>
+        <a href="./install.html">Install</a>
+        <a href="./language.html">Language</a>
+        <a href="./packs.html">Packs</a>
+        <a href="./pack-authoring.html">Pack Authoring</a>
+        <a href="./agents.html">Agent Samples</a>
+        <a class="active" href="./benchmarks.html">Benchmarks</a>
+      </div>
+      <div class="nav-meta">
+        <a href="https://github.com/axlanguage/axlang">GitHub</a>
+        <a href="https://github.com/axlanguage/axlang/releases/latest">Latest Release</a>
+      </div>
+    </nav>
+    <main>
+      <div class="eyebrow">Benchmarks</div>
+      <h1>Benchmarks compare native Ax output with common baselines.</h1>
+      <p class="lead">The benchmark suite is a regression harness for code generation and runtime overhead. It includes equivalent recursive, loop-heavy, string-search, path-normalization, URL-processing, CLI-argument, JSON-query, and simple HTTP backend programs for Ax, C, Rust, Python, and JavaScript.</p>
+
+      <h2>Run</h2>
+      <pre><code>./benchmarks/run.sh</code></pre>
+      <p>Every command is wrapped by <code>benchmarks/expect-exit.sh</code>, so Ax and each baseline must produce the same expected score before it is timed. The default run uses 5 warmups and 20 measured runs, and writes JSON plus Markdown reports to <code>.ax-out/benchmarks/</code>.</p>
+
+      <h2>Recommended Tool</h2>
+      <pre><code>brew install hyperfine
+./benchmarks/run.sh</code></pre>
+
+      <h2>Workloads</h2>
+      <ul>
+        <li><code>fib</code>: recursive integer function calls.</li>
+        <li><code>mix</code>: mutable <code>while</code> loop integer arithmetic with modulo.</li>
+        <li><code>text</code>: string length, prefix/suffix, and substring search loops.</li>
+        <li><code>path</code>: lexical path normalization and basename loops.</li>
+        <li><code>url</code>: URL parse, query lookup, and percent encode/decode loops.</li>
+        <li><code>cli</code>: command-line flag and option lookup loops.</li>
+        <li><code>json</code>: JSON compaction, validation, nested query, kind checks, and array lookup loops.</li>
+        <li><code>web</code>: simple HTTP backend route handling for <code>/health</code> and <code>/ping</code>.</li>
+      </ul>
+
+      <h2>Interpreting Results</h2>
+      <p>Use benchmark results to catch regressions and compare implementation strategies. Do not treat one microbenchmark as a complete language ranking.</p>
+    </main>
+  </div>
+</body>
+</html>

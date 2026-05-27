@@ -1,0 +1,1 @@
+@a(b:#):#{$c=0$d=0$e=Ed("AX_TEXT","agent-native-compiler-runtime-pack") ~c<b{?e~"runtime"{d=d+e!}?Se(e,"agent"){d=d+1}?Sf(e,"pack"){d=d+2}c=c+1}^d%251} {^a(5000000)}

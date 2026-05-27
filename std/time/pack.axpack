@@ -1,0 +1,5 @@
+name = "std.time"
+version = "1.0.0"
+syntax = []
+operations = ["time.now", "time.now_ms", "time.iso_utc", "time.sleep_ms"]
+effects = ["time.now", "time.sleep"]

@@ -1,0 +1,6 @@
+interface:
+  display_name: "Ax"
+  short_description: "Build native AI-min Ax agent tools"
+  default_prompt: "Use $ax to create AI-min Ax source, check it, build it, and package a native agent tool."
+policy:
+  allow_implicit_invocation: true

@@ -1,0 +1,5 @@
+name = "std.map"
+version = "1.0.0"
+syntax = []
+operations = ["map.new", "set", "get", "has", "del", "len", "clear"]
+effects = ["heap.alloc", "heap.free"]

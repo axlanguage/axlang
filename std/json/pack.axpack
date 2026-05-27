@@ -1,0 +1,5 @@
+name = "std.json"
+version = "1.0.0"
+syntax = []
+operations = ["json.escape", "json.quote", "json.pair", "json.string_pair", "json.object", "json.array", "json.array_push", "json.string_array_push", "json.set", "json.string_set", "json.remove", "json.compact", "json.valid", "json.get", "json.get_or", "json.query", "json.query_or", "json.query_int", "json.query_bool", "json.query_kind", "json.has", "json.query_has", "json.int", "json.bool", "json.contains", "json.query_contains", "json.kind", "json.len", "json.query_len", "json.at", "json.query_at", "json.keys", "json.keys_json", "json.query_keys_json"]
+effects = []

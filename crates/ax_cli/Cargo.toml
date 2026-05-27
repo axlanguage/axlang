@@ -1,0 +1,20 @@
+[package]
+name = "ax_cli"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "ax"
+path = "src/main.rs"
+
+[dependencies]
+ax_codegen_llvm = { path = "../ax_codegen_llvm" }
+ax_core = { path = "../ax_core" }
+ax_diag = { path = "../ax_diag" }
+ax_fmt = { path = "../ax_fmt" }
+ax_parser = { path = "../ax_parser" }
+ax_pkg = { path = "../ax_pkg" }
+ax_semantic = { path = "../ax_semantic" }
+ax_test = { path = "../ax_test" }
+

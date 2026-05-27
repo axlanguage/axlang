@@ -1,0 +1,1 @@
+@a(b:#):#{$c="--input"$d="--mode"$e=0$f=0 ~e<b{?Ac(c){f=f+Ad(c)!}?Ac(d){f=f+Ad(d)!}e=e+1}^f%251} {^a(100000)}

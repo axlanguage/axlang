@@ -1,0 +1,5 @@
+name = "std.net.http.client"
+version = "1.0.0"
+syntax = []
+operations = ["http.get", "http.post", "http.get_json", "http.post_json"]
+effects = ["net.read", "net.write"]

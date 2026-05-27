@@ -1,0 +1,1 @@
+@a(b:#):#{$c=0$d=0$e="examples//agents/./string_agent.ax" ~c<b{d=d+Pc(9(e))!?Pg(e){d=d+1}|{d=d+2}c=c+1}^d%251} {^a(1000000)}

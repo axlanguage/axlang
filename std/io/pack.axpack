@@ -1,0 +1,5 @@
+name = "std.io"
+version = "1.0.0"
+syntax = []
+operations = ["io.println", "io.print", "io.eprintln", "io.read_line"]
+effects = ["io.stdout", "io.stderr", "io.stdin"]

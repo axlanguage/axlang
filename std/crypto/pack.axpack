@@ -1,0 +1,5 @@
+name = "std.crypto"
+version = "1.0.0"
+syntax = []
+operations = ["crypto.sha256_hex", "crypto.sha256_json", "crypto.sha256_verify_hex", "crypto.hmac_sha256_hex", "crypto.hmac_sha256_json", "crypto.hmac_sha256_verify_hex", "crypto.hmac_sha256_file_hex", "crypto.hmac_sha256_file_json", "crypto.hmac_sha256_file_verify_hex", "crypto.hmac_sha256_file_range_hex", "crypto.hmac_sha256_file_range_json", "crypto.hmac_sha256_file_range_verify_hex", "crypto.sha256_file_hex", "crypto.sha256_file_json", "crypto.sha256_file_verify_hex", "crypto.sha256_file_range_hex", "crypto.sha256_file_range_json", "crypto.sha256_file_range_verify_hex", "crypto.base64_encode", "crypto.base64_decode", "crypto.constant_time_eq", "crypto.random_hex", "crypto.random_base64url", "crypto.uuid_v4"]
+effects = ["crypto.hash", "crypto.random"]

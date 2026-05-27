@@ -1,0 +1,5 @@
+name = "std.str"
+version = "1.0.0"
+syntax = []
+operations = ["str.len", "str.contains", "str.index_of", "str.count", "str.starts_with", "str.ends_with", "str.trim", "str.upper", "str.lower", "str.concat", "str.repeat", "str.replace", "str.slice", "str.split_json", "str.lines_json", "str.from_i64", "str.parse_i64", "str.parse_i32", "str.token", "str.line", "str.token_upper"]
+effects = []

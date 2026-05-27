@@ -1,0 +1,1 @@
+@@a(b:$):#{$c=U(b)?c:U("agent"){^100}|{^42}} {$b=a("agent")$c=@(b);"scored"^c}

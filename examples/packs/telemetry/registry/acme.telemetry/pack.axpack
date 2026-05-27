@@ -1,0 +1,6 @@
+name = "acme.telemetry"
+version = "1.0.0"
+syntax = []
+operations = ["telemetry.track"]
+effects = ["telemetry.write"]
+native = ["native.c"]

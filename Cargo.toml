@@ -1,0 +1,32 @@
+[workspace]
+members = [
+  "crates/ax_ast",
+  "crates/ax_cli",
+  "crates/ax_codegen_llvm",
+  "crates/ax_core",
+  "crates/ax_diag",
+  "crates/ax_effects",
+  "crates/ax_fmt",
+  "crates/ax_ir",
+  "crates/ax_lexer",
+  "crates/ax_packs",
+  "crates/ax_parser",
+  "crates/ax_pkg",
+  "crates/ax_runtime",
+  "crates/ax_semantic",
+  "crates/ax_test",
+]
+resolver = "2"
+
+[workspace.package]
+version = "1.0.0"
+edition = "2021"
+license = "MIT"
+authors = ["Ax contributors"]
+repository = "https://github.com/axlanguage/axlang"
+homepage = "https://axlanguage.github.io/axlang/"
+documentation = "https://axlanguage.github.io/axlang/"
+readme = "README.md"
+
+[workspace.lints.rust]
+unsafe_code = "forbid"

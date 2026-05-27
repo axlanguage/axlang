@@ -1,0 +1,5 @@
+name = "std.cli"
+version = "1.0.0"
+syntax = []
+operations = ["cli.argc", "cli.arg", "cli.has", "cli.value", "cli.value_or", "cli.args_json", "cli.parse_json"]
+effects = ["cli.read"]

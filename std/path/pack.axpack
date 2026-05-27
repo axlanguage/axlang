@@ -1,0 +1,5 @@
+name = "std.path"
+version = "1.0.0"
+syntax = []
+operations = ["path.normalize", "path.join", "path.basename", "path.dirname", "path.extname", "path.stem", "path.is_absolute"]
+effects = []

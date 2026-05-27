@@ -1,0 +1,6 @@
+[package]
+name = "telemetry-pack-example"
+version = "0.1.0"
+
+[dependencies]
+acme.telemetry = "1.0"

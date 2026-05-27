@@ -1,0 +1,18 @@
+[package]
+name = "ax_codegen_llvm"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+ax_ast = { path = "../ax_ast" }
+ax_core = { path = "../ax_core" }
+ax_diag = { path = "../ax_diag" }
+ax_ir = { path = "../ax_ir" }
+ax_semantic = { path = "../ax_semantic" }
+
+[dev-dependencies]
+ax_parser = { path = "../ax_parser" }
+
+[lib]
+path = "src/lib.rs"

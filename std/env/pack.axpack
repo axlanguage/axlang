@@ -1,0 +1,5 @@
+name = "std.env"
+version = "1.0.0"
+syntax = []
+operations = ["env.get", "env.has", "env.set", "env.get_or", "env.snapshot_json", "env.load_dotenv", "env.load_dotenv_json"]
+effects = ["env.read", "env.write"]

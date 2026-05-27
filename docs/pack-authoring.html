@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ax Pack Authoring</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="./index.html">
+        <img src="./assets/ax-logo.png" alt="Ax logo">
+        Ax
+      </a>
+      <div class="nav-group">
+        <a href="./index.html">Overview</a>
+        <a href="./install.html">Install</a>
+        <a href="./language.html">Language</a>
+        <a href="./packs.html">Packs</a>
+        <a class="active" href="./pack-authoring.html">Pack Authoring</a>
+        <a href="./agents.html">Agent Samples</a>
+        <a href="./benchmarks.html">Benchmarks</a>
+      </div>
+      <div class="nav-meta">
+        <a href="https://github.com/axlanguage/axlang">GitHub</a>
+        <a href="https://github.com/axlanguage/axlang/releases/latest">Latest Release</a>
+      </div>
+    </nav>
+    <main>
+      <div class="eyebrow">Pack Authoring</div>
+      <h1>Create Ax packs with manifests, effects, and native shims.</h1>
+      <p class="lead">An Ax pack is a manifest plus optional native sources. The compiler loads declared effects for semantic checking and links native sources into the final executable.</p>
+
+      <h2>Registry Layout</h2>
+      <pre><code>registry/
+  acme.telemetry/
+    pack.axpack
+    native.c</code></pre>
+
+      <h2>Manifest</h2>
+      <pre><code>name = "acme.telemetry"
+version = "1.0.0"
+syntax = []
+operations = ["telemetry.track"]
+effects = ["telemetry.write"]
+native = ["native.c"]</code></pre>
+      <p><code>operations</code> names the callable pack API. When this list is present, Ax rejects undeclared calls during semantic checking.</p>
+
+      <h2>Native Symbol</h2>
+      <p>External operation calls lower to symbols named from the pack and operation.</p>
+      <pre><code>telemetry.track() -> ax_pack_acme_telemetry_track()</code></pre>
+      <pre><code>#include &lt;stdio.h&gt;
+
+void ax_pack_acme_telemetry_track(void) {
+  puts("acme.telemetry track");
+}</code></pre>
+
+      <h2>Generate A Skeleton</h2>
+      <pre><code>skills/ax/scripts/new-pack.sh ./registry acme.telemetry telemetry.write track</code></pre>
+
+      <h2>Checked Example</h2>
+      <p>The repository includes a complete external pack project at <code>examples/packs/telemetry</code>.</p>
+      <pre><code>cd examples/packs/telemetry
+../../../target/release/ax pack list --registry registry
+../../../target/release/ax check app.ax --registry registry
+../../../target/release/ax build app.ax -o .ax-out/telemetry_app --registry registry
+.ax-out/telemetry_app</code></pre>
+
+      <h2>Use The Pack</h2>
+      <pre><code>ax pack list --registry ./registry
+ax pack find telemetry --registry ./registry
+ax pack info acme.telemetry --registry ./registry
+ax pack install acme.telemetry --registry ./registry
+ax check app.ax --registry ./registry
+ax graph app.ax --registry ./registry
+ax build app.ax -o app --registry ./registry</code></pre>
+
+      <h2>Validation Checklist</h2>
+      <table>
+        <tr><th>Check</th><th>Command</th></tr>
+        <tr><td>Registry lists the pack</td><td><code>ax pack list --registry ./registry</code></td></tr>
+        <tr><td>Search finds pack metadata</td><td><code>ax pack find telemetry --registry ./registry</code></td></tr>
+        <tr><td>Manifest operations are inspectable</td><td><code>ax pack info acme.telemetry --registry ./registry</code></td></tr>
+        <tr><td>Project manifest records dependency</td><td><code>ax pack install acme.telemetry --registry ./registry</code></td></tr>
+        <tr><td>Effects are accepted</td><td><code>ax check app.ax --registry ./registry</code></td></tr>
+        <tr><td>Call graph shows inferred effects</td><td><code>ax graph app.ax --registry ./registry</code></td></tr>
+        <tr><td>Native symbols link</td><td><code>ax build app.ax -o app --registry ./registry</code></td></tr>
+        <tr><td>Checked example passes</td><td><code>./scripts/verify-pack-examples.sh</code></td></tr>
+        <tr><td>Skill pack workflow runs end to end</td><td><code>skills/ax/scripts/pack-smoke.sh .</code></td></tr>
+      </table>
+    </main>
+  </div>
+</body>
+</html>

@@ -1,0 +1,5 @@
+name = "std.process"
+version = "1.0.0"
+syntax = []
+operations = ["process.exec", "process.exec_limit", "process.status", "process.run_json", "process.run_log_json", "process.run_lines_json", "process.run_log_lines_json"]
+effects = ["process.exec"]

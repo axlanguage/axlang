@@ -1,0 +1,5 @@
+name = "std.url"
+version = "1.0.0"
+syntax = []
+operations = ["url.encode", "url.decode", "url.query_get", "url.query_or", "url.query_has", "url.query_json", "url.path", "url.host", "url.scheme"]
+effects = []

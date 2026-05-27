@@ -1,0 +1,5 @@
+name = "std.net.tcp"
+version = "1.0.0"
+syntax = ["tcp"]
+operations = ["tcp.listen", "tcp.connect", "tcp.serve_text", "accept", "read_text", "write_text", "request_text", "close"]
+effects = ["net.listen", "net.read", "net.write"]

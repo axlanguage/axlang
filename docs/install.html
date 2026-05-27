@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Install Ax</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div class="shell">
+    <nav>
+      <a class="brand" href="./index.html">
+        <img src="./assets/ax-logo.png" alt="Ax logo">
+        Ax
+      </a>
+      <div class="nav-group">
+        <a href="./index.html">Overview</a>
+        <a class="active" href="./install.html">Install</a>
+        <a href="./language.html">Language</a>
+        <a href="./packs.html">Packs</a>
+        <a href="./pack-authoring.html">Pack Authoring</a>
+        <a href="./agents.html">Agent Samples</a>
+        <a href="./benchmarks.html">Benchmarks</a>
+      </div>
+      <div class="nav-meta">
+        <a href="https://github.com/axlanguage/axlang">GitHub</a>
+        <a href="https://github.com/axlanguage/axlang/releases/latest">Latest Release</a>
+      </div>
+    </nav>
+    <main>
+      <div class="eyebrow">Install</div>
+      <h1>Install Ax from source or release binaries.</h1>
+      <p class="lead">Ax needs `clang` for native linking. TLS examples also need OpenSSL development files discoverable through `pkg-config openssl`.</p>
+
+      <h2>From Source</h2>
+      <pre><code>git clone https://github.com/axlanguage/axlang
+cd axlang
+cargo build --release
+target/release/ax version</code></pre>
+
+      <h2>One Line Install</h2>
+      <pre><code>curl -fsSL https://raw.githubusercontent.com/axlanguage/axlang/main/dist/install.sh | sh</code></pre>
+      <p>The installer downloads the matching release artifact from GitHub's latest release into <code>$HOME/.ax/bin</code>. Set <code>AX_VERSION=v1.0.0</code> for a specific tag, <code>AX_RELEASE_BASE</code> for a mirror or local artifact directory, or <code>AX_BIN_DIR</code> for a different install directory.</p>
+
+      <h2>Windows PowerShell</h2>
+      <pre><code>iwr https://raw.githubusercontent.com/axlanguage/axlang/main/dist/install.ps1 -useb | iex</code></pre>
+      <p>Both installers verify <code>SHA256SUMS</code> when the release publishes it, and stop if the checksum does not match.</p>
+
+      <h2>Release Binary Names</h2>
+      <table>
+        <tr><th>OS</th><th>Artifact</th></tr>
+        <tr><td>macOS arm64</td><td><code>ax-darwin-arm64</code></td></tr>
+        <tr><td>macOS x64</td><td><code>ax-darwin-x64</code></td></tr>
+        <tr><td>Linux x64</td><td><code>ax-linux-x64</code></td></tr>
+        <tr><td>Linux arm64</td><td><code>ax-linux-arm64</code></td></tr>
+        <tr><td>Windows x64</td><td><code>ax-windows-x64.exe</code></td></tr>
+      </table>
+
+      <h2>Release Automation</h2>
+      <pre><code>.github/workflows/release.yml</code></pre>
+      <p>The release workflow builds every artifact above, runs <code>ax version</code>, builds and runs <code>examples/release_smoke.ax</code> to cover cross-platform standard packs, verifies the installers against staged artifacts, creates <code>SHA256SUMS</code>, uploads a combined workflow artifact, and attaches assets to GitHub releases for <code>v*</code> tags.</p>
+
+      <h2>Local Release Smoke</h2>
+      <pre><code>./dist/verify-release.sh</code></pre>
+      <p>This builds the host release artifact, installs it from <code>dist/bin</code> with the one-line installer path, runs <code>ax version</code>, lists packs, executes a native filesystem-agent sample, and runs the release standard-pack smoke.</p>
+
+      <h2>Codex Skill</h2>
+      <pre><code>npx skills add https://github.com/axlanguage/axlang --skill ax -a codex</code></pre>
+      <p>The skill provides Ax install, compile, check, graph, pack authoring, and agent-program workflows for Codex. It includes helper scripts for finding or installing Ax, finding or installing packs, scaffolding external packs, and running an end-to-end pack smoke.</p>
+      <pre><code>skills/ax/scripts/ensure-ax.sh .
+skills/ax/scripts/ax.sh check examples/hello.ax
+skills/ax/scripts/ax.sh build examples/hello.ax
+skills/ax/scripts/ax.sh run examples/hello.ax
+skills/ax/scripts/pack.sh find crypto
+skills/ax/scripts/pack.sh info std.crypto
+skills/ax/scripts/new-pack.sh ./registry acme.telemetry telemetry.write track
+skills/ax/scripts/pack-smoke.sh .</code></pre>
+
+      <h2>Windows Runtime Scope</h2>
+      <p>Windows release binaries support the CLI and native builds for core, filesystem, crypto, environment, process, CLI args, JSON, string, path, time, URL, and async programs. TCP and HTTP network runtime files compile with explicit limited stubs on Windows; use macOS or Linux for native network execution in v1.0.</p>
+    </main>
+  </div>
+</body>
+</html>

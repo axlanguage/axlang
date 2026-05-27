@@ -1,0 +1,201 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: "true"
+
+jobs:
+  build:
+    name: Build ${{ matrix.artifact }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: ubuntu-24.04
+            artifact: ax-linux-x64
+            binary: target/release/ax
+          - os: ubuntu-24.04-arm
+            artifact: ax-linux-arm64
+            binary: target/release/ax
+          - os: macos-15-intel
+            artifact: ax-darwin-x64
+            binary: target/release/ax
+          - os: macos-14
+            artifact: ax-darwin-arm64
+            binary: target/release/ax
+          - os: windows-2022
+            artifact: ax-windows-x64.exe
+            binary: target/release/ax.exe
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Use stable Rust
+        run: |
+          rustup toolchain install stable --profile minimal
+          rustup default stable
+
+      - name: Test workspace
+        run: cargo test --workspace
+
+      - name: Build release binary
+        run: cargo build --release --bin ax
+
+      - name: Stage Unix artifact
+        if: runner.os != 'Windows'
+        run: |
+          mkdir -p dist/bin
+          cp "${{ matrix.binary }}" "dist/bin/${{ matrix.artifact }}"
+          chmod +x "dist/bin/${{ matrix.artifact }}"
+
+      - name: Stage Windows artifact
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path dist/bin | Out-Null
+          Copy-Item "${{ matrix.binary }}" "dist/bin/${{ matrix.artifact }}"
+
+      - name: Smoke test artifact
+        if: runner.os != 'Windows'
+        run: ./dist/bin/${{ matrix.artifact }} version
+
+      - name: Smoke test Windows artifact
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: .\dist\bin\${{ matrix.artifact }} version
+
+      - name: Smoke test Unix native build
+        if: runner.os != 'Windows'
+        run: |
+          mkdir -p .ax-out
+          ./dist/bin/${{ matrix.artifact }} build examples/release_smoke.ax -o .ax-out/release-smoke
+          .ax-out/release-smoke --mode release
+
+      - name: Smoke test Unix installer
+        if: runner.os != 'Windows'
+        run: |
+          install_dir="$PWD/.ax-out/release-install"
+          std_backup="$PWD/.ax-out/release-std-hidden"
+          runtime_backup="$PWD/.ax-out/release-runtime-hidden"
+          rm -rf "$install_dir"
+          rm -rf "$std_backup"
+          rm -rf "$runtime_backup"
+          AX_RELEASE_BASE="file://$PWD/dist/bin" AX_BIN_DIR="$install_dir" ./dist/install.sh
+          "$install_dir/ax" version
+          mv std "$std_backup"
+          mv crates/ax_runtime/src "$runtime_backup"
+          restore_std() {
+            if [ -d "$std_backup" ] && [ ! -d std ]; then
+              mv "$std_backup" std
+            fi
+            if [ -d "$runtime_backup" ] && [ ! -d crates/ax_runtime/src ]; then
+              mv "$runtime_backup" crates/ax_runtime/src
+            fi
+          }
+          trap restore_std EXIT
+          "$install_dir/ax" packs
+          "$install_dir/ax" run examples/agents/fs_journal.ax
+          "$install_dir/ax" run examples/release_smoke.ax -- --mode release
+          restore_std
+          trap - EXIT
+
+      - name: Smoke test Windows native build
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path .ax-out | Out-Null
+          .\dist\bin\${{ matrix.artifact }} build examples\hello.ax -o .ax-out\hello.exe
+          $Hello = & .\.ax-out\hello.exe
+          if ($Hello -ne "hello world") { throw "unexpected hello output: $Hello" }
+          .\dist\bin\${{ matrix.artifact }} build examples\primitives.ax -o .ax-out\primitives.exe
+          $Primitives = & .\.ax-out\primitives.exe
+          if ($Primitives -ne "primitives") { throw "unexpected primitives output: $Primitives" }
+
+      - name: Smoke test Windows installer
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          $InstallDir = Join-Path (Resolve-Path .ax-out).Path "release-install"
+          $StdBackup = Join-Path (Resolve-Path .ax-out).Path "release-std-hidden"
+          $RuntimeBackup = Join-Path (Resolve-Path .ax-out).Path "release-runtime-hidden"
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue $InstallDir
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue $StdBackup
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue $RuntimeBackup
+          $env:AX_RELEASE_BASE = (Resolve-Path dist\bin).Path
+          $env:AX_BIN_DIR = $InstallDir
+          .\dist\install.ps1
+          & "$InstallDir\ax.exe" version
+          Move-Item -Path std -Destination $StdBackup
+          Move-Item -Path crates\ax_runtime\src -Destination $RuntimeBackup
+          try {
+            & "$InstallDir\ax.exe" packs
+            $Hello = & "$InstallDir\ax.exe" run examples\hello.ax
+            if ($Hello -ne "hello world") { throw "unexpected installed hello output: $Hello" }
+            $Primitives = & "$InstallDir\ax.exe" run examples\primitives.ax
+            if ($Primitives -ne "primitives") { throw "unexpected installed primitives output: $Primitives" }
+          } finally {
+            if ((Test-Path $StdBackup) -and -not (Test-Path std)) {
+              Move-Item -Path $StdBackup -Destination std
+            }
+            if ((Test-Path $RuntimeBackup) -and -not (Test-Path crates\ax_runtime\src)) {
+              Move-Item -Path $RuntimeBackup -Destination crates\ax_runtime\src
+            }
+          }
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.artifact }}
+          path: dist/bin/${{ matrix.artifact }}
+          if-no-files-found: error
+
+  publish:
+    name: Publish checksums and release
+    needs: build
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Download artifacts
+        uses: actions/download-artifact@v8
+        with:
+          pattern: ax-*
+          path: dist/bin
+          merge-multiple: true
+
+      - name: Generate checksums
+        run: |
+          cd dist/bin
+          sha256sum ax-* > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: Upload release bundle artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: ax-release-bundle
+          path: dist/bin/*
+          if-no-files-found: error
+
+      - name: Publish GitHub release assets
+        if: startsWith(github.ref, 'refs/tags/')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+          GH_REPO: ${{ github.repository }}
+        run: |
+          if gh release view "$TAG" --repo "$GH_REPO" >/dev/null 2>&1; then
+            gh release upload "$TAG" dist/bin/* --repo "$GH_REPO" --clobber
+          else
+            gh release create "$TAG" dist/bin/* \
+              --repo "$GH_REPO" \
+              --title "$TAG" \
+              --notes "Ax $TAG native release binaries and SHA256SUMS."
+          fi

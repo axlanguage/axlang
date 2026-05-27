@@ -1,0 +1,1 @@
+{#("http://127.0.0.1:3010/health","http://127.0.0.1:3010/echo","agent","body")$Ha(a)$Hb(b,c)$Hc(a,256)$Hd(b,"agent-json",5)$g`d$g'"ok"&g#"status":200&i'"ok"&h'"truncated"&h`d:c$U(e);+".ax-out";".ax-out/http-fetch.sha256",k;".ax-out/http-fetch.result.json",g;".ax-out/http-fetch.echo.json",h?!j{^2};f}
